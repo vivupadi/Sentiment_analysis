@@ -7,7 +7,7 @@ import string
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-nltk.download('omw-1.4')
+#nltk.download('omw-1.4')
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 from sklearn.model_selection import train_test_split
 
@@ -30,11 +30,11 @@ def text_clean(text):
     summing = ' '.join(words)
     return summing
 
-file_path = "C:\\Users\\Vivupadi\\Desktop\\Sentiment Analysis\\data\\twitter_training\\twitter_training.csv"
+#file_path = "C:\\Users\\Vivupadi\\Desktop\\Sentiment Analysis\\data\\twitter_training\\twitter_training.csv"
 
-data = load_data(file_path)
-df = preprocess(data)
-print(df)
+#data = load_data(file_path)
+#df = preprocess(data)
+#print(df)
 
 """
 def preprocess(data):
