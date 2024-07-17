@@ -20,9 +20,15 @@ class Sentiment_Analysis(QMainWindow):
 
         layout = QVBoxLayout()
 
-        self.load_button =QPushButton('Select File',self)
+        self.load_button = QPushButton('Select File',self)
         self.load_button.clicked.connect(self.load_file)
         layout.addWidget(self.load_button)
+
+        #display data
+
+        self.preprocess_button = QPushButton('Preprocess data',self)
+        self.preprocess_button.clicked.connect(self.prepare_data)
+        layout.addWidget(self.preprocess_button)
 
         central_widget.setLayout(layout)
         
@@ -31,14 +37,18 @@ class Sentiment_Analysis(QMainWindow):
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getOpenFileName(self, "Select File", "", "All Files (*);;Text Files (*.txt)", options=options)
         if file_path:
-            data = load_data(file_path)
-            df = preprocess(data)
-            print(df)
+            self.data = load_data(file_path)
+            #self.df = preprocess(self.data)
+            #print(self.df)
             #return df
         
-    #def preprocess()
-        
-   # def show_wordmap(df):
+    def prepare_data(self):
+        self.df = preprocess(self.data)
+        print(self.df)
+
+    def show_wordmap(self):
+        #show wordmap
+
 
     #def load_model():
 
