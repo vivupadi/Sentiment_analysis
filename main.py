@@ -134,13 +134,13 @@ class Sentiment_Analysis(QMainWindow):
     
 
     def vectorize(self):
-        self.df_vector = vectorize_data(self.df)
+        self.X, self.y = vectorize_data(self.df)
         print('Done Vectorization')
 
     def training(self):
         model = LogisticRegression(C=1, solver = 'liblinear',max_iter=50)
-        self.acc, _ = train_model(model, self.df_vector)
-        self.accuracy.setText('Accuracy_Score:', self.acc)
+        _, self.acc = train_model(model, self.X, self.y)
+        self.accuracy.setText(f'Accuracy_Score: {self.acc}')
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

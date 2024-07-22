@@ -18,7 +18,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 def load_data(file_path):
     data = pd.read_csv(file_path, header = 0, names=["ID","Entity","Sentiment","Text"])
-    data = data[:100]
+    #data = data[:100]
     return data
 
 def preprocess(df):
@@ -45,23 +45,15 @@ def vectorize_data(df):
     ngram_range=(1, 1) #analysis of one word
     )
     df['Sentiment'] = df['Sentiment'].replace({'Positive': 1, 'Negative' : 0, 'Neutral': 2})
-    df['Text'] = bow_counts.fit_transform(df['Text'])
-    print(df)
-    return df
+    text_vector = bow_counts.fit_transform(df['Text'])
+    return text_vector, df['Sentiment']
 
 
 #def load_model()
 
-def train_model(model, data):
-    X = data[['Text']]
-    y = data[['Sentiment']]
+def train_model(model, X, y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, shuffle =True)
-    X_train = np.array(X_train, dtype=int)
-    y_train = np.array(y_train)
-    y_test = np.array(y_test)
 
-    print(X_train)
-    print(y_train)
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
