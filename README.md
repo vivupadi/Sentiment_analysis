@@ -6,3 +6,4 @@ Next steps:
 1. To see the difference in metrics if Word2Vec is used. Read that Word2Vec is better in highlighting the sentiments involved in the text.
 2. Implement XGBooost model
 3. Create a new button to select models
+![image](https://github.com/user-attachments/assets/d38592c5-b081-460b-8b90-94794246304b)
