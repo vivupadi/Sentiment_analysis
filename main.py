@@ -1,4 +1,5 @@
 from train import *
+from predict import *
 
 
 import sys
@@ -67,23 +68,45 @@ class Sentiment_Analysis(QMainWindow):
         self.Senti_wordmap.setFixedSize(200,30)
         layout.addWidget(self.Senti_wordmap)
 
+        #Display WOrdCloud
         self.wordmap_label = QLabel(self)
         self.wordmap_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.wordmap_label)
 
+
+        #Button to vectorize Text data
         self.vector_button = QPushButton('Vectorize Data')
         self.vector_button.clicked.connect(self.vectorize)
         self.vector_button.setFixedSize(200,30)
         layout.addWidget(self.vector_button)
 
+        #Button to Train model
         self.train_button = QPushButton('Train model')
         self.train_button.clicked.connect(self.training)
         self.train_button.setFixedSize(200, 30)
         layout.addWidget(self.train_button)
 
+        #Dipslay accuracy
         self.accuracy = QLabel(self)
         self.accuracy.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.accuracy)
+
+        #FIeld to enter a User defined New tweet
+        self.prompt = QLineEdit(self)
+        self.prompt.setPlaceholderText("Enter a Tweet")
+        layout.addWidget(self.prompt)
+
+        #predict button
+        self.predict_button = QPushButton('Predict the text Sentiment')
+        self.predict_button.clicked.connect(self.predict)
+        self.predict_button.setFixedSize(200, 30)
+        layout.addWidget(self.predict_button)
+
+
+        #Display the sentiment of the entered Text 
+        self.display_sentiment = QLabel(self)
+        self.display_sentiment.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.display_sentiment)
 
         central_widget.setLayout(layout)
         
@@ -138,13 +161,20 @@ class Sentiment_Analysis(QMainWindow):
     
 
     def vectorize(self):
-        self.X, self.y = vectorize_data(self.df)
+        self.X, self.y, self.vectorizer = vectorize_data(self.df)
         print('Done Vectorization')
 
     def training(self):
-        model = LogisticRegression(C=1, solver = 'liblinear',max_iter=150)
-        _, self.acc = train_model(model, self.X, self.y)
+        self.model = LogisticRegression(C=1, solver = 'liblinear',max_iter=150)
+        self.model, self.acc = train_model(self.model, self.X, self.y)
         self.accuracy.setText(f'Accuracy_Score: {self.acc}')
+
+    def predict(self):
+        text = self.prompt.text()
+        self.display_sentiment.clear()
+        y_sentiment = predict_sentiment(self.model, self.vectorizer, text) 
+        self.display_sentiment.setText(f'Predicted Sentiment is: {y_sentiment}')
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
