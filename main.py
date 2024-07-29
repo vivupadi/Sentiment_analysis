@@ -91,7 +91,7 @@ class Sentiment_Analysis(QMainWindow):
         self.accuracy.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.accuracy)
 
-        #FIeld to enter a User defined New tweet
+        #Field to enter a User defined New tweet
         self.prompt = QLineEdit(self)
         self.prompt.setPlaceholderText("Enter a Tweet")
         layout.addWidget(self.prompt)
@@ -126,6 +126,7 @@ class Sentiment_Analysis(QMainWindow):
         self.df['Sentiment_copy'] =self.df['Sentiment']
         print(self.df)
 
+    #Display wordcloud
     def show_wordmap(self):
         senti = self.Senti_wordmap.currentText()
         df_sentiment = self.get_text_data(senti)
@@ -146,6 +147,7 @@ class Sentiment_Analysis(QMainWindow):
         pixmap.loadFromData(buf.getvalue())
         self.wordmap_label.setPixmap(pixmap)
     
+    #Either one hot encoding or below function to encode labels
     def get_text_data(self, selected_senti):
         df = self.df
         if selected_senti == 'Positive':
