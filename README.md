@@ -1,11 +1,18 @@
-The project has been made into a GUI for better interactive and ease purpose.
-The Project delves into NLP concepts and the pre-processing involved before training a Logistic Regression model.
-Visualization includes using the Word cloud mapping for the user-selected sentiment.
-The Text to Vector conversion is done using Bag of Words
+1. The project uses a GUI for better interactive and ease purpose.
+2. The Project delves into NLP concepts and the pre-processing involved before training a Logistic Regression model.
+3. Dataset used- Kaggle Twitter Sentiment Analysis which consists of 4 columns -  Tweet ID, Entity, Text and Sentiment
+4. Visualization includes using the Word cloud mapping for the user-selected sentiment.
+5. Preprocessing includes- Retaining only alphanumeric letters, Switching everything to lower-case, Removing stopwords(e.g 'The', 'is'), Lemmatizing (changing words to root form)
+6. The Text to Vector conversion is done using Bag of Words
+7. Main.py - Includes GUI parts
+8. Train.py - Includes loading, preprocessing, vectorization, model training
+9. Predict.py - Prediction on the user input
 Next steps:
 1. To see the difference in metrics if Word2Vec is used. Read that Word2Vec is better in highlighting the sentiments involved in the text.
-2. Implement XGBooost model
-3. Create a new button to select models
+2. Hyperparameter tuning
+3. Implement XGBooost model
+4. Create a new button to select models
 
 --Screenshot of the GUI
-![image](https://github.com/user-attachments/assets/d38592c5-b081-460b-8b90-94794246304b)
+![image](https://github.com/user-attachments/assets/cabdc3a0-1abc-4750-be06-49a7e56c56fa)
+
