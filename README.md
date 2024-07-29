@@ -8,4 +8,5 @@ Next steps:
 3. Create a new button to select models
 
 --Screenshot of the GUI
-![image](https://github.com/user-attachments/assets/d38592c5-b081-460b-8b90-94794246304b)
+![image](https://github.com/user-attachments/assets/cabdc3a0-1abc-4750-be06-49a7e56c56fa)
+
