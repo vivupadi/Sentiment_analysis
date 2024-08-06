@@ -12,9 +12,6 @@ from io import BytesIO
 
 from wordcloud import WordCloud
 
-from sklearn.linear_model import LogisticRegression
-
-
 import matplotlib.pyplot as plt
 
 class Sentiment_Analysis(QMainWindow):
@@ -79,6 +76,13 @@ class Sentiment_Analysis(QMainWindow):
         self.vector_button.clicked.connect(self.vectorize)
         self.vector_button.setFixedSize(200,30)
         layout.addWidget(self.vector_button)
+
+        #Select model
+        self.select_model = QComboBox(self)
+        self.select_model.addItems(["LogisticRegression", "XGBoost"])
+        self.select_model.setFixedSize(200,30)
+        layout.addWidget(self.select_model)
+
 
         #Button to Train model
         self.train_button = QPushButton('Train model')
@@ -167,9 +171,10 @@ class Sentiment_Analysis(QMainWindow):
         print('Done Vectorization')
 
     def training(self):
-        self.model = LogisticRegression(C=1, solver = 'liblinear',max_iter=150)
-        self.model, self.acc = train_model(self.model, self.X, self.y)
-        self.accuracy.setText(f'Accuracy_Score: {self.acc}')
+        self.selected_model = self.select_model.currentText()
+        self.model, self.acc = train_model(self.selected_model, self.X, self.y)
+        self.accuracy.clear()
+        self.accuracy.setText(f'Accuracy_Score: {self.acc}')  
 
     def predict(self):
         text = self.prompt.text()

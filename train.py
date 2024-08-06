@@ -7,9 +7,9 @@ import string
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-#nltk.download('punkt')
-#nltk.download('stopwords')
-#nltk.download('wordnet')
+
+from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
 
 #nltk.download('omw-1.4')
 from nltk.stem import WordNetLemmatizer, PorterStemmer
@@ -48,7 +48,7 @@ def vectorize_data(df):
     bow_counts = CountVectorizer(
     tokenizer=word_tokenize,
     stop_words=stop_words, #English Stopwords
-    ngram_range=(1, 1) #analysis of one word
+    ngram_range=(1, 2) #analysis of one word
     )
     if 'Sentiment' in df.columns:
         df['Sentiment'] = df['Sentiment'].replace({'Positive': 1, 'Negative' : 0, 'Neutral': 2, 'Irrelevant': 3})
@@ -58,7 +58,13 @@ def vectorize_data(df):
 
 #def load_model()
 
-def train_model(model, X, y):
+def train_model(selected_model, X, y):
+    if selected_model == 'LogisticRegression':
+        model = LogisticRegression(C=1, solver = 'liblinear',max_iter=150)
+    elif selected_model == 'XGBoost':
+        model = XGBClassifier()
+    else:
+        print('Select model')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, shuffle =True)
  
     model.fit(X_train, y_train)
