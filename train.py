@@ -1,24 +1,21 @@
 import numpy as np
 import pandas as pd
-import os
 import re
-import string
+
+from models import *
+from vectorizer import *
 
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-from sklearn.linear_model import LogisticRegression
-from xgboost import XGBClassifier
 
 #nltk.download('omw-1.4')
-from nltk.stem import WordNetLemmatizer, PorterStemmer
+from nltk.stem import WordNetLemmatizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 from sklearn.feature_extraction.text import CountVectorizer
-
-
 
 def load_data(file_path):
     data = pd.read_csv(file_path, header = 0, names=["ID","Entity","Sentiment","Text"])
@@ -30,8 +27,6 @@ def preprocess(df):
     df['Text'] = [str(data) for data in df.Text]            #convert to string
     df['Text'] = df['Text'].apply(lambda x : re.sub('[^A-Za-z0-9 ]+', ' ', x)) #remove special characters
     df['Text'] = df['Text'].apply(lambda x : text_clean(x))
-    #print(df['Text'])
-    #print(df['Sentiment'].unique())
     return df
 
 def text_clean(text):
@@ -43,26 +38,28 @@ def text_clean(text):
     return summing
 
 
-def vectorize_data(df):
-    stop_words = set(stopwords.words('english'))
-    bow_counts = CountVectorizer(
-    tokenizer=word_tokenize,
-    stop_words=stop_words, #English Stopwords
-    ngram_range=(1, 2) #analysis of one word
-    )
+def vectorize_data(df, dropdown_vect):
+    selected_vect = vectorizer()
+    if dropdown_vect == 'Bow':
+        vect = selected_vect.bow_vect()
+    elif dropdown_vect == 'Word2vec':
+        vect = selected_vect.word2vec_vect()
+    else:
+        print('Select a vectorizer')
     if 'Sentiment' in df.columns:
         df['Sentiment'] = df['Sentiment'].replace({'Positive': 1, 'Negative' : 0, 'Neutral': 2, 'Irrelevant': 3})
-    text_vector = bow_counts.fit_transform(df['Text'])
-    return text_vector, df['Sentiment'], bow_counts
+    text_vector = vect.fit_transform(df['Text'])
+    return text_vector, df['Sentiment'], vect
 
-
-#def load_model()
 
 def train_model(selected_model, X, y):
+    mod = models()
     if selected_model == 'LogisticRegression':
-        model = LogisticRegression(C=1, solver = 'liblinear',max_iter=150)
+        model = mod.log_reg()
     elif selected_model == 'XGBoost':
-        model = XGBClassifier()
+        model = mod.XGB()
+    elif selected_model == 'Random Forest':
+        model = mod.RanFo()
     else:
         print('Select model')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, shuffle =True)
@@ -75,17 +72,3 @@ def train_model(selected_model, X, y):
     accuracy = accuracy*100
 
     return model, accuracy
-
-
-
-"""
-def train_model(df_preprocessed):
-    #random frest
-    #logreg
-    #lstm
-    return 
-
-
-file_path = "C:\\Users\\Vivupadi\\Desktop\\Sentiment Analysis\\data\\twitter_training.csv"
-
-"""

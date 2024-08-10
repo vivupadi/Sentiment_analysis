@@ -29,34 +29,31 @@ class Sentiment_Analysis(QMainWindow):
 
         self.load_button = QPushButton('Select File',self)
         self.load_button.clicked.connect(self.load_file)
-        #self.load_button.setAlignment(Qt.AlignCenter)
-        self.load_button.setFixedSize(300, 30)
+        self.load_button.setFixedSize(200, 50)
         layout.addWidget(self.load_button, alignment=Qt.AlignCenter)
 
         self.Load_status = QLabel()
         self.Load_status.setText('Select File')
         self.Load_status.setAlignment(Qt.AlignCenter)
-        self.Load_status.setFixedSize(300,30)
+        self.Load_status.setFixedSize(200,30)
         layout.addWidget(self.Load_status, alignment=Qt.AlignCenter)
 
         #display data
 
         self.preprocess_button = QPushButton('Preprocess data',self)
         self.preprocess_button.clicked.connect(self.prepare_data)
-        #self.preprocess_button.setAlignment(Qt.AlignCenter)
-        self.preprocess_button.setFixedSize(300,30)
+        self.preprocess_button.setFixedSize(200,30)
         layout.addWidget(self.preprocess_button, alignment=Qt.AlignCenter)
 
         self.preprocess_status = QLabel()
-        #self.preprocess_status.setText('Preprocessing in Progress...')
         self.preprocess_status.setAlignment(Qt.AlignCenter)
-        self.preprocess_status.setFixedSize(300,30)
+        self.preprocess_status.setFixedSize(200,30)
         layout.addWidget(self.preprocess_status, alignment=Qt.AlignCenter)
         
         #display Wordmap
         self.wordmap_button = QPushButton('Show Word Map', self)
         self.wordmap_button.clicked.connect(self.show_wordmap)
-        self.wordmap_button.setFixedSize(300,30)
+        self.wordmap_button.setFixedSize(150,50)
         layout.addWidget(self.wordmap_button, alignment=Qt.AlignCenter)
 
         #select sentiment for the wordmap
@@ -70,6 +67,11 @@ class Sentiment_Analysis(QMainWindow):
         self.wordmap_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.wordmap_label)
 
+        #Select the vectorizer
+        self.select_vectorizer = QComboBox(self)
+        self.select_vectorizer.addItems(["Bow", "Word2Vec"])
+        self.select_vectorizer.setFixedSize(200,30)
+        layout.addWidget(self.select_vectorizer)
 
         #Button to vectorize Text data
         self.vector_button = QPushButton('Vectorize Data')
@@ -79,7 +81,7 @@ class Sentiment_Analysis(QMainWindow):
 
         #Select model
         self.select_model = QComboBox(self)
-        self.select_model.addItems(["LogisticRegression", "XGBoost"])
+        self.select_model.addItems(["LogisticRegression", "XGBoost", "Random Forest"])
         self.select_model.setFixedSize(200,30)
         layout.addWidget(self.select_model)
 
@@ -167,7 +169,8 @@ class Sentiment_Analysis(QMainWindow):
     
 
     def vectorize(self):
-        self.X, self.y, self.vectorizer = vectorize_data(self.df)
+        self.selected_vect =self.select_vectorizer.currentText()
+        self.X, self.y, self.vectorizer = vectorize_data(self.df, self.selected_vect)
         print('Done Vectorization')
 
     def training(self):
