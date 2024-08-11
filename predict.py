@@ -15,6 +15,5 @@ def predict_sentiment(model, vectorizer, text):
 def vectorize_predict(df, vectorizer):
     if 'Sentiment' in df.columns:
         df['Sentiment'] = df['Sentiment'].replace({'Positive': 1, 'Negative' : 0, 'Neutral': 2, 'Irrelevant': 3})
-    #print(df['Sentiment'].unique())
     text_vector = vectorizer.transform(df['Text'])
     return text_vector

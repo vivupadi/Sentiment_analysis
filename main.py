@@ -69,7 +69,7 @@ class Sentiment_Analysis(QMainWindow):
 
         #Select the vectorizer
         self.select_vectorizer = QComboBox(self)
-        self.select_vectorizer.addItems(["Bow", "Word2Vec"])
+        self.select_vectorizer.addItems(["Bow", "TF_IDF", "Word2Vec","Glove"])
         self.select_vectorizer.setFixedSize(200,30)
         layout.addWidget(self.select_vectorizer)
 

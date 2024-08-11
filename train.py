@@ -39,16 +39,21 @@ def text_clean(text):
 
 
 def vectorize_data(df, dropdown_vect):
+    if 'Sentiment' in df.columns:
+        df['Sentiment'] = df['Sentiment'].replace({'Positive': 1, 'Negative' : 0, 'Neutral': 2, 'Irrelevant': 3})
     selected_vect = vectorizer()
     if dropdown_vect == 'Bow':
         vect = selected_vect.bow_vect()
+        text_vector = vect.fit_transform(df['Text'])
+    elif dropdown_vect == 'TF_IDF':
+        vect = selected_vect.tf_idf_vect()
+        text_vector = vect.fit_transform(df['Text'])
     elif dropdown_vect == 'Word2vec':
-        vect = selected_vect.word2vec_vect()
+        vect = selected_vect.word2vec_vect(df['Text'])
+    elif dropdown_vect == 'Glove':
+        vect = selected_vect.glove_vect()
     else:
         print('Select a vectorizer')
-    if 'Sentiment' in df.columns:
-        df['Sentiment'] = df['Sentiment'].replace({'Positive': 1, 'Negative' : 0, 'Neutral': 2, 'Irrelevant': 3})
-    text_vector = vect.fit_transform(df['Text'])
     return text_vector, df['Sentiment'], vect
 
 
