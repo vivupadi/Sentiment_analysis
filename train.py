@@ -19,7 +19,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 def load_data(file_path):
     data = pd.read_csv(file_path, header = 0, names=["ID","Entity","Sentiment","Text"])
-    #data = data[:50]
+    #data = data[:500]
     return data
 
 def preprocess(df):
@@ -45,15 +45,30 @@ def vectorize_data(df, dropdown_vect):
     if dropdown_vect == 'Bow':
         vect = selected_vect.bow_vect()
         text_vector = vect.fit_transform(df['Text'])
+    
     elif dropdown_vect == 'TF_IDF':
         vect = selected_vect.tf_idf_vect()
         text_vector = vect.fit_transform(df['Text'])
+    
     elif dropdown_vect == 'Word2vec':
-        vect = selected_vect.word2vec_vect(df['Text'])
+        vect = selected_vect.word2vec_vect()
+        vect.build_vocab(df['Text'])
+        vect.train(df['Text'], total_examples=vect.corpus_count, epochs=10, report_delay=1)
+        def get_sentence_vector(sentence, model):
+            word_vectors = [model.wv[word] for word in sentence if word in model.wv]
+            if word_vectors:
+                return np.mean(word_vectors, axis=0)
+            else:
+                return np.zeros(model.vector_size)
+
+        text_vector = df['Text'].apply(lambda x: get_sentence_vector(x, vect))
+
     elif dropdown_vect == 'Glove':
         vect = selected_vect.glove_vect()
+        text_vector = vect.fit(df['Text'])
     else:
         print('Select a vectorizer')
+
     return text_vector, df['Sentiment'], vect
 
 

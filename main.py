@@ -69,21 +69,21 @@ class Sentiment_Analysis(QMainWindow):
 
         #Select the vectorizer
         self.select_vectorizer = QComboBox(self)
-        self.select_vectorizer.addItems(["Bow", "TF_IDF", "Word2Vec","Glove"])
+        self.select_vectorizer.addItems(["Bow", "TF_IDF"])
         self.select_vectorizer.setFixedSize(200,30)
-        layout.addWidget(self.select_vectorizer)
+        layout.addWidget(self.select_vectorizer, alignment=Qt.AlignCenter)
 
         #Button to vectorize Text data
         self.vector_button = QPushButton('Vectorize Data')
         self.vector_button.clicked.connect(self.vectorize)
         self.vector_button.setFixedSize(200,30)
-        layout.addWidget(self.vector_button)
+        layout.addWidget(self.vector_button, alignment=Qt.AlignCenter)
 
         #Select model
         self.select_model = QComboBox(self)
         self.select_model.addItems(["LogisticRegression", "XGBoost", "Random Forest"])
         self.select_model.setFixedSize(200,30)
-        layout.addWidget(self.select_model)
+        layout.addWidget(self.select_model, alignment=Qt.AlignCenter)
 
 
         #Button to Train model

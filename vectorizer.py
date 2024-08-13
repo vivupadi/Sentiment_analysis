@@ -2,6 +2,8 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
+import multiprocessing
+
 from sklearn.feature_extraction.text import CountVectorizer
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -24,11 +26,14 @@ class vectorizer:
 
 
     def tf_idf_vect(self):
-        return TfidfVectorizer(max_features=5000)
+        stop_words = set(stopwords.words('english'))
+        return TfidfVectorizer(stop_words= stop_words, ngram_range=(1,4))
 
 
-    def word2vec_vect(self,sentence):
-        word2vec_model = Word2Vec(sentences=sentence, vector_size=100, window=5, min_count=1, workers=4)
+    def word2vec_vect(self):
+        cores = multiprocessing.cpu_count()
+        word2vec_model = Word2Vec(min_count=20,window=2,sample=6e-5, alpha=0.03, min_alpha=0.0007, 
+                                  negative=20,workers=cores-1)
         return word2vec_model
     
     def glove_vect(self):
