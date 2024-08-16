@@ -130,7 +130,7 @@ class Sentiment_Analysis(QMainWindow):
         self.predict_button = QPushButton('Predict the text Sentiment')
         self.predict_button.clicked.connect(self.predict)
         self.predict_button.setFixedSize(200, 30)
-        layout1.addWidget(self.predict_button)
+        layout1.addWidget(self.predict_button, alignment=Qt.AlignCenter)
 
 
         #Display the sentiment of the entered Text 
