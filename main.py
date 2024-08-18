@@ -65,7 +65,7 @@ class Sentiment_Analysis(QMainWindow):
         #self.Senti_wordmap.setFixedSize(200,30)
         layout2.addWidget(self.Senti_wordmap)
         
-        layout1.addLayout(layout2)
+        layout1.addLayout(layout2, stretch=2)
         
         #display Wordmap
         self.wordmap_button = QPushButton('Show Word Map', self)
@@ -81,13 +81,13 @@ class Sentiment_Analysis(QMainWindow):
         #Display vector selection option
         self.vect_text = QLabel()
         self.vect_text.setText('Select the type of vectorizer:')
-        layout3.addWidget(self.vect_text)
+        layout3.addWidget(self.vect_text, stretch=5)
 
         #Select the vectorizer
         self.select_vectorizer = QComboBox(self)
-        self.select_vectorizer.addItems(["Bow", "TF_IDF"])
+        self.select_vectorizer.addItems(["Bow", "TF_IDF", "Word2vec"])
         self.select_vectorizer.setFixedSize(200,30)
-        layout3.addWidget(self.select_vectorizer)
+        layout3.addWidget(self.select_vectorizer, stretch=5)
 
         layout1.addLayout(layout3)
 
