@@ -13,6 +13,7 @@ Next steps:
 1. To see the difference in metrics if Word2Vec is used. Read that Word2Vec is better in highlighting the sentiments involved in the text.
 2. Hyperparameter tuning
 3. Use Prediction based Vector embeddings (Word2Vec, Glove,etc). Might need to change few concepts
+4. Bert, LSTM Implementation
 
 
 --Screenshot of the GUI
