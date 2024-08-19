@@ -11,6 +11,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from gensim.models import Word2Vec
 import gensim.downloader
 
+#import fasttext
+
 class vectorizer:
     def __init__(self):
         pass
@@ -32,10 +34,18 @@ class vectorizer:
 
     def word2vec_vect(self):
         cores = multiprocessing.cpu_count()
-        word2vec_model = Word2Vec(min_count=20,window=2,sample=6e-5, alpha=0.03, min_alpha=0.0007, 
+        word2vec_model = Word2Vec(min_count=20,window=4,sample=6e-5, alpha=0.03, min_alpha=0.0007, 
                                   negative=20,workers=cores-1)
         return word2vec_model
     
     def glove_vect(self):
         glove_vectors = gensim.downloader.load('glove-twitter-25')
         return glove_vectors
+    
+    #def fasttext_vect(self):
+        # Skipgram model :
+     #   fasttext_model = fasttext.train_unsupervised('data.txt', model='skipgram')
+
+        # or, cbow model :
+      #  fasttext_model = fasttext.train_unsupervised('data.txt', model='cbow')
+       # return fasttext_model

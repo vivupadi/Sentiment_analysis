@@ -49,22 +49,19 @@ def vectorize_data(df, dropdown_vect):
     elif dropdown_vect == 'TF_IDF':
         vect = selected_vect.tf_idf_vect()
         text_vector = vect.fit_transform(df['Text'])
-        print(text_vector)
     
     elif dropdown_vect == 'Word2vec':
         vect = selected_vect.word2vec_vect()
         vect.build_vocab(df['Text'])
         vect.train(df['Text'], total_examples=vect.corpus_count, epochs=10, report_delay=1)
         def get_sentence_vector(sentence, model):
-            word_vectors = model.wv[word] for word in sentence if word in model.wv
-            #word_vectors = [model.wv[word] for word in sentence if word in model.wv]
-            return np.asarray(word_vectors)
-            #if word_vectors:
-            #    return np.mean(word_vectors, axis=0)
-            #else:
-            #    return np.zeros(model.vector_size)
-
-        text_vector = df['Text'].apply(lambda x: get_sentence_vector(x, vect))
+            word_vectors = [model.wv[word] for word in sentence if word in model.wv.key_to_index]
+            if word_vectors:
+                return np.mean(word_vectors, axis=0)
+            else:
+                return np.zeros(model.vector_size)
+        #Important concept in WOrd2Vec to convert the array
+        text_vector = np.vstack(df['Text'].apply(lambda x: get_sentence_vector(x, vect)))
         print(text_vector)
 
     elif dropdown_vect == 'Glove':
