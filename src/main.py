@@ -70,7 +70,7 @@ class Sentiment_Analysis(QMainWindow):
         #display Wordmap
         self.wordmap_button = QPushButton('Show Word Map', self)
         self.wordmap_button.clicked.connect(self.show_wordmap)
-        self.wordmap_button.setFixedSize(150,50)
+        self.wordmap_button.setFixedSize(150,30)
         layout1.addWidget(self.wordmap_button, alignment=Qt.AlignCenter)
 
         #Display WOrdCloud
@@ -105,7 +105,7 @@ class Sentiment_Analysis(QMainWindow):
         #Select model
         self.select_model = QComboBox(self)
         self.select_model.addItems(["LogisticRegression", "XGBoost", "Random Forest"])
-        self.select_model.setFixedSize(200,30)
+        self.select_model.setFixedSize(150,30)
         layout4.addWidget(self.select_model)
 
         layout1.addLayout(layout4)
