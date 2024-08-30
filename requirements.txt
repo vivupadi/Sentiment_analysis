@@ -1,18 +1,9 @@
-clang==5.0
-country-converter==0.6.7
-coverage==6.3.2
-Cython==0.29.28
 keras==2.9.0
-numpy==1.21.6
-prometheus-flask-exporter==0.23.0
-pyreadline==2.1
-pytest==7.0.1
-pytest-cov==3.0.0
-pytest-mock==3.7.0
-python-dotenv==0.21.1
-python-language-server==0.31.9
-tensorflow
-tensorflow-datasets==1.2.0
-tensorflow-metadata==0.14.0
-tensorflow-model-optimization==0.7.2
+numpy==1.17.0
+nltk==3.7
+tensorflow==2.3.0
+scikit-learn==1.0.2
+xgboost==1.5.1
+pandas==1.2.4
+gensim==4.2.0
 

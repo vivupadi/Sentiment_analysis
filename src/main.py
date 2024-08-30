@@ -33,6 +33,7 @@ class Sentiment_Analysis(QMainWindow):
         self.load_button = QPushButton('Select File',self)
         self.load_button.clicked.connect(self.load_file)
         self.load_button.setFixedSize(100, 30)
+        self.load_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.load_button, alignment=Qt.AlignCenter)
 
         self.Load_status = QLabel()
@@ -46,6 +47,7 @@ class Sentiment_Analysis(QMainWindow):
         self.preprocess_button = QPushButton('Preprocess data',self)
         self.preprocess_button.clicked.connect(self.prepare_data)
         self.preprocess_button.setFixedSize(200,30)
+        self.preprocess_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.preprocess_button, alignment=Qt.AlignCenter)
 
         self.preprocess_status = QLabel()
@@ -55,7 +57,6 @@ class Sentiment_Analysis(QMainWindow):
 
         #Display Sentiment selection option
         self.sentiment_text = QLabel()
-        #self.sentiment_text.setAlignment(Qt.AlignCenter)
         self.sentiment_text.setText('Select the Sentiment to show its Word Cloud:')
         layout2.addWidget(self.sentiment_text)
 
@@ -63,6 +64,7 @@ class Sentiment_Analysis(QMainWindow):
         self.Senti_wordmap = QComboBox(self)
         self.Senti_wordmap.addItems(["Positive", "Negative", "Neutral", "Irrelevant"])
         #self.Senti_wordmap.setFixedSize(200,30)
+        self.Senti_wordmap.setStyleSheet("border: 3px solid black")
         layout2.addWidget(self.Senti_wordmap)
         
         layout1.addLayout(layout2, stretch=2)
@@ -71,6 +73,7 @@ class Sentiment_Analysis(QMainWindow):
         self.wordmap_button = QPushButton('Show Word Map', self)
         self.wordmap_button.clicked.connect(self.show_wordmap)
         self.wordmap_button.setFixedSize(150,30)
+        self.wordmap_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.wordmap_button, alignment=Qt.AlignCenter)
 
         #Display WOrdCloud
@@ -87,6 +90,7 @@ class Sentiment_Analysis(QMainWindow):
         self.select_vectorizer = QComboBox(self)
         self.select_vectorizer.addItems(["Bow", "TF_IDF", "Word2vec"])
         self.select_vectorizer.setFixedSize(200,30)
+        self.select_vectorizer.setStyleSheet("border: 3px solid black")
         layout3.addWidget(self.select_vectorizer, stretch=5)
 
         layout1.addLayout(layout3)
@@ -95,6 +99,7 @@ class Sentiment_Analysis(QMainWindow):
         self.vector_button = QPushButton('Vectorize Data')
         self.vector_button.clicked.connect(self.vectorize)
         self.vector_button.setFixedSize(200,30)
+        self.vector_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.vector_button, alignment=Qt.AlignCenter)
 
         #Display vector selection option
@@ -106,6 +111,7 @@ class Sentiment_Analysis(QMainWindow):
         self.select_model = QComboBox(self)
         self.select_model.addItems(["LogisticRegression", "XGBoost", "Random Forest"])
         self.select_model.setFixedSize(150,30)
+        self.select_model.setStyleSheet("border: 3px solid black")
         layout4.addWidget(self.select_model)
 
         layout1.addLayout(layout4)
@@ -114,6 +120,7 @@ class Sentiment_Analysis(QMainWindow):
         self.train_button = QPushButton('Train model')
         self.train_button.clicked.connect(self.training)
         self.train_button.setFixedSize(200, 30)
+        self.train_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.train_button, alignment= Qt.AlignCenter)
 
         #Dipslay accuracy
@@ -124,12 +131,14 @@ class Sentiment_Analysis(QMainWindow):
         #Field to enter a User defined New tweet
         self.prompt = QLineEdit(self)
         self.prompt.setPlaceholderText("Enter a Tweet")
+        self.prompt.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.prompt)
 
         #predict button
         self.predict_button = QPushButton('Predict the text Sentiment')
         self.predict_button.clicked.connect(self.predict)
         self.predict_button.setFixedSize(200, 30)
+        self.predict_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.predict_button, alignment=Qt.AlignCenter)
 
 
@@ -138,6 +147,7 @@ class Sentiment_Analysis(QMainWindow):
         self.display_sentiment.setAlignment(Qt.AlignCenter)
         layout1.addWidget(self.display_sentiment)
 
+        central_widget.setStyleSheet("background: Cyan")
         central_widget.setLayout(layout1)
         
 
