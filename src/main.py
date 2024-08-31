@@ -19,11 +19,13 @@ class Sentiment_Analysis(QMainWindow):
         super().__init__()
         self.setWindowTitle("Sentiment Analysis")
         self.setGeometry(200, 200, 800, 800)
+        #self.setStyleSheet("border: 4px solid black")
         self.initUI()
     
     def initUI(self):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
+        #self.setStyleSheet("border: 4px solid black")
 
         layout1 = QVBoxLayout()
         layout2 = QHBoxLayout()
@@ -43,7 +45,6 @@ class Sentiment_Analysis(QMainWindow):
         layout1.addWidget(self.Load_status, alignment=Qt.AlignCenter)
 
         #display data
-
         self.preprocess_button = QPushButton('Preprocess data',self)
         self.preprocess_button.clicked.connect(self.prepare_data)
         self.preprocess_button.setFixedSize(200,30)
@@ -147,7 +148,7 @@ class Sentiment_Analysis(QMainWindow):
         self.display_sentiment.setAlignment(Qt.AlignCenter)
         layout1.addWidget(self.display_sentiment)
 
-        central_widget.setStyleSheet("background: Cyan")
+        central_widget.setStyleSheet("background: Light Cyan")
         central_widget.setLayout(layout1)
         
 
