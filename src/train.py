@@ -16,6 +16,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import RandomizedSearchCV
 
 def load_data(file_path):
     data = pd.read_csv(file_path, header = 0, names=["ID","Entity","Sentiment","Text"])
@@ -76,20 +77,23 @@ def vectorize_data(df, dropdown_vect):
 def train_model(selected_model, X, y):
     mod = models()
     if selected_model == 'LogisticRegression':
-        model = mod.log_reg()
+        model, param = mod.log_reg()
     elif selected_model == 'XGBoost':
-        model = mod.XGB()
+        model, param = mod.XGB()
     elif selected_model == 'Random Forest':
-        model = mod.RanFo()
+        model, param = mod.RanFo()
     else:
         print('Select model')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, shuffle =True)
+    random_search = RandomizedSearchCV(model, param_distributions=param)
  
-    model.fit(X_train, y_train)
+    random_search.fit(X_train, y_train)
 
-    y_pred = model.predict(X_test)
+    tuned_mod = model(**random_search.best_params_)
+
+    y_pred = tuned_mod.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred)
     accuracy = accuracy*100
 
-    return model, accuracy
+    return tuned_mod, accuracy
