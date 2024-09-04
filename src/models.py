@@ -9,18 +9,17 @@ class models:
         pass
 
     def log_reg(self):
-        model =  LogisticRegression(C=1, solver = 'liblinear',max_iter=150)
+        model =  LogisticRegression
         param = { 
-        'solvers': ['newton-cg', 'lbfgs', 'liblinear'], 
-        'penalty': ['l2'], 
-        'c_values': [100, 10, 1.0, 0.1, 0.01] 
+        'solver': ['lbfgs', 'liblinear'],  
+        'C': [10, 1.0, 0.1] 
         }
         return model, param
     
     def XGB(self):
-        model = XGBClassifier()
+        model = XGBClassifier
         param = { 
-        'n_estimators': [25, 50, 100, 150], 
+        'n_estimators': [25, 100, 150], 
         'max_features': ['sqrt', 'log2', None], 
         'max_depth': [3, 6, 9], 
         'max_leaf_nodes': [3, 6, 9], 
@@ -28,7 +27,7 @@ class models:
         return model, param
     
     def RanFo(self):
-        model = RandomForestClassifier()
+        model = RandomForestClassifier
         param = { 
         'n_estimators': [25, 50, 100, 150], 
         'max_features': ['sqrt', 'log2', None], 

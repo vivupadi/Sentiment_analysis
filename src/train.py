@@ -20,7 +20,7 @@ from sklearn.model_selection import RandomizedSearchCV
 
 def load_data(file_path):
     data = pd.read_csv(file_path, header = 0, names=["ID","Entity","Sentiment","Text"])
-    #data = data[:500]
+    data = data[:500]
     return data
 
 def preprocess(df):
@@ -85,11 +85,13 @@ def train_model(selected_model, X, y):
     else:
         print('Select model')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, shuffle =True)
-    random_search = RandomizedSearchCV(model, param_distributions=param)
+    random_search = RandomizedSearchCV(model(), param_distributions=param, n_iter =6)
  
     random_search.fit(X_train, y_train)
 
     tuned_mod = model(**random_search.best_params_)
+
+    tuned_mod.fit(X_train, y_train)
 
     y_pred = tuned_mod.predict(X_test)
 
