@@ -1,6 +1,10 @@
 from train import *
 from predict import *
 
+from datetime import datetime
+
+import joblib
+
 
 import sys
 import requests
@@ -103,6 +107,13 @@ class Sentiment_Analysis(QMainWindow):
         self.vector_button.setStyleSheet("border: 3px solid black")
         layout1.addWidget(self.vector_button, alignment=Qt.AlignCenter)
 
+        #Load model
+        self.load_model_button = QPushButton('Load Saved model')
+        self.load_model_button.clicked.connect(self.load_model)
+        self.load_model_button.setFixedSize(150, 30)
+        self.load_model_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.load_model_button, alignment=Qt.AlignCenter)
+
         #Display vector selection option
         self.model_text = QLabel()
         self.model_text.setText('Select model to be trained:')
@@ -147,6 +158,13 @@ class Sentiment_Analysis(QMainWindow):
         self.display_sentiment = QLabel(self)
         self.display_sentiment.setAlignment(Qt.AlignCenter)
         layout1.addWidget(self.display_sentiment)
+
+        #Save Model button
+        self.save_button = QPushButton('Save model')
+        self.save_button.clicked.connect(self.save_model)
+        self.save_button.setFixedSize(150, 30)
+        self.save_button.setStyleSheet("border: 3px solid black")
+        layout1.addWidget(self.save_button, alignment=Qt.AlignCenter)
 
         central_widget.setStyleSheet("background: Light Cyan")
         central_widget.setLayout(layout1)
@@ -210,15 +228,29 @@ class Sentiment_Analysis(QMainWindow):
 
     def training(self):
         self.selected_model = self.select_model.currentText()
-        self.model, self.acc = train_model(self.selected_model, self.X, self.y)
+        self.model, self.acc,self.best_params = train_model(self.selected_model, self.X, self.y)
         self.accuracy.clear()
-        self.accuracy.setText(f'Accuracy_Score: {self.acc}')  
+        self.accuracy.setText(f'Model: {self.model}, Best_params: {self.best_params}, Accuracy_Score: {self.acc}')  
 
     def predict(self):
         text = self.prompt.text()
         self.display_sentiment.clear()
         y_sentiment = predict_sentiment(self.model, self.vectorizer, text) 
         self.display_sentiment.setText(f'Predicted Sentiment is: {y_sentiment}')
+
+    def save_model(self):
+        model = self.model
+        date = datetime.now()
+        model_name = re.sub(r'[(){}<>]', '', str(model))
+        file_name = f'C://Users//Vivupadi//Desktop//Sentiment Analysis//models//{(model_name)}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.pkl'
+        #with open(file_name, 'wb') as f:
+        joblib.dump(model, file_name)
+
+    def load_model(self):
+        options = QFileDialog.options
+        file_way,_ = QFileDialog.getOpenFileName(self, "Select File", "", "All Files (*);;pickle files (*.pkl)", options=options)
+        if file_way:
+            self.model = joblib.load(file_way)
 
 
 if __name__ == "__main__":

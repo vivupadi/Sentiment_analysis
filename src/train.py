@@ -98,4 +98,4 @@ def train_model(selected_model, X, y):
     accuracy = accuracy_score(y_test, y_pred)
     accuracy = accuracy*100
 
-    return tuned_mod, accuracy
+    return tuned_mod, accuracy, random_search.best_params_
