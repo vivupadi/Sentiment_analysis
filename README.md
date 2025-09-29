@@ -19,3 +19,11 @@ Next steps:
 --Screenshot of the GUI
 ![image](https://github.com/user-attachments/assets/cabdc3a0-1abc-4750-be06-49a7e56c56fa)
 
+
+<div align="center">
+⭐ Star this repo if you find it helpful!
+  
+Made with ❤️ by Vivek Padayattil
+</div>
+
+
